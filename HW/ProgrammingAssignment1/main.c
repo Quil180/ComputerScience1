@@ -5,7 +5,7 @@ This program is written by: Yousef Alaa Awad */
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXSTRING 21
+#define MAXSTRING 20
 
 // structures that I must include
 typedef struct RegisteredVehicle { // for one registered vehicle
@@ -57,6 +57,7 @@ void registerVehicle(Campus *campus, const char *license, const char *owner) { /
   campus->total_registered_vehicles += 1;
   campus->registered_vehicles = (RegisteredVehicle **)realloc(campus->registered_vehicles, campus->total_registered_vehicles * sizeof(RegisteredVehicle));
   campus->registered_vehicles[campus->total_registered_vehicles-1] = createRegisteredVehicle(license, owner);
+  //printf("");
 }
 
 void parkVehicle(Garage *garage, RegisteredVehicle *vehicle) { // park a vehicle at a garage. If full, print FULL, other park and print PARKED
@@ -185,16 +186,15 @@ void displayVehiclesByOwner(const Campus *campus, const char *owner_name) {
 
 int removeGarage(Campus *campus, const char *garage_name) { // remove a garage, and free its memory. Do not remove the vehicles from the system. Return 1 or 0 depnding on success.
   int i = 0;
-  if (strcmp(campus->garages[i]->garage_name, garage_name) != 0) {
+  while (strcmp(campus->garages[i]->garage_name, garage_name) != 0) {
     i++;
     if (i >= campus->total_garages) {
       return 0;
     }
-  } else {
-    free(campus->garages[i]->garage_name);
-    free(campus->garages[i]->parked_vehicles);
-    free(campus->garages[i]);
   }
+  free(campus->garages[i]->garage_name);
+  free(campus->garages[i]->parked_vehicles);
+  free(campus->garages[i]);
   return 1;
 }
 
@@ -259,21 +259,25 @@ void removeVehicleGarage(Campus *campus, char *arg1, int *arg1i) {
 
 void freeAll(Campus *campus) {
   int i;
-  // freeing up all the garages
-  for (i = 0; i < (campus->total_garages); i++) {
-    removeGarage(campus, campus->garages[i]->garage_name);
-    printf("freed garage[%d]\n", i);
-  }
-  free(campus->garages);
-  // freeing up all the vehicles
+
+  // freeing the registered vehicles of the campus
   for (i = 0; i < campus->total_registered_vehicles; i++) {
     free(campus->registered_vehicles[i]->license_plate);
     free(campus->registered_vehicles[i]->owner_name);
     free(campus->registered_vehicles[i]);
-    printf("freed vehicle[%d]\n", i);
   }
+  // freeing the whole registered vehicles array
   free(campus->registered_vehicles);
-  
+
+  // freeing the garages subitems that the createGarage structure allocates
+  for (i = 0; i < campus->total_garages; i++) {
+    free(campus->garages[i]->parked_vehicles);
+    free(campus->garages[i]->garage_name);
+    free(campus->garages[i]);
+  }
+  // freeing the whole garages array
+  free(campus->garages);
+  // freeing the campus from memory
   free(campus);
 
 }
@@ -289,7 +293,8 @@ int main() {
   Campus *campus = createCampus(&c);
 
   // do the following while i is less than the amount of commands
-  for (int i = 0; i < c-1; i++) {
+  for (int i = 0; i < c; i++) {
+    //printf("command %d\n", i);
     char command[MAXSTRING];
     char arg1[MAXSTRING];
     char arg2[MAXSTRING];
@@ -335,6 +340,7 @@ int main() {
       char name[MAXSTRING];
       scanf("%s %s", license, name);
       registerVehicle(campus, license, name);
+      printf("REGISTERED\n");
     }  else if (strcmp(command, "REMOVE_VEHICLE_GARAGE") == 0) {
       scanf("%s %s", arg1, arg2);
       removeVehicleGarage(campus, arg1, &arg1i);
