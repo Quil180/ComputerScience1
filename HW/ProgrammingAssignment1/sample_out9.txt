@@ -1,0 +1,20 @@
+PARKED
+PARKED
+PARKED
+PARKED
+PARKED
+FULL
+G11 NOT FOUND
+G1 REMOVED
+G5 REMOVED
+2
+NOT FOUND IN CAMPUS
+Garage: G2, Capacity: 4, Occupied: 1, Utilization: 25.00%
+Garage: G3, Capacity: 50, Occupied: 0, Utilization: 0.00%
+Garage: G4, Capacity: 2, Occupied: 1, Utilization: 50.00%
+Garage: G6, Capacity: 50, Occupied: 0, Utilization: 0.00%
+Garage: G7, Capacity: 80, Occupied: 0, Utilization: 0.00%
+Garage: G8, Capacity: 10, Occupied: 0, Utilization: 0.00%
+Garage: G9, Capacity: 500, Occupied: 0, Utilization: 0.00%
+Garage: G10, Capacity: 1000, Occupied: 0, Utilization: 0.00%
+Least Utilized: G3
