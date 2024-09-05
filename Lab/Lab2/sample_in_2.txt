@@ -1,0 +1,8 @@
+2 3 3
+alice 10 8 7 6 31
+bob 8 9 6 5 28
+charlie 9 7 8 7 31
+
+david 7 8 9 6 30
+emma 8 10 9 8 35
+frank 6 7 8 7 28

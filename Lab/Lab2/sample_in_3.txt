@@ -1,0 +1,19 @@
+3 5 3
+
+course1_student1 10 8 7 9 6
+course1_student2 8 9 6 7 8
+course1_student3 9 7 8 6 5
+course1_student4 7 8 9 10 8
+course1_student5 8 10 9 8 7
+
+course2_student1 6 7 8 9 7
+course2_student2 5 6 7 8 9
+course2_student3 7 8 6 5 4
+course2_student4 6 7 8 9 6
+course2_student5 8 9 7 6 5
+
+course3_student1 9 8 7 6 7
+course3_student2 7 6 8 9 8
+course3_student3 6 8 9 7 6
+course3_student4 8 7 6 5 9
+course3_student5 7 9 8 7 8
