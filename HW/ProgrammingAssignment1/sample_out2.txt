@@ -1,0 +1,7 @@
+PARKED
+FULL
+Garage: GARAGE_A, Capacity: 3, Occupied: 0, Utilization: 0.00%
+Garage: GARAGE_B, Capacity: 4, Occupied: 0, Utilization: 0.00%
+Garage: GARAGE_C, Capacity: 3, Occupied: 0, Utilization: 0.00%
+Garage: GARAGE_D, Capacity: 1, Occupied: 1, Utilization: 100.00%
+Least Utilized: GARAGE_A
