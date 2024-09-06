@@ -73,7 +73,7 @@ void parkVehicle(Garage *garage, RegisteredVehicle *vehicle) { // park a vehicle
 int removeVehicleFromGarage(Garage *garage, const char *license) { // remove vehicle from a garage. Return 1 if succesful otherwise return 0
   int i = 0;
   RegisteredVehicle *temp;
-  while (garage->parked_vehicles[i]->license_plate == license) {
+  while (strcmp(garage->parked_vehicles[i]->license_plate, license) != 0) {
     i++;
   }
   if (i != garage->current_count) {
@@ -125,28 +125,30 @@ int relocateVehicle(Campus *campus, const char *license, const char *target_gara
   for (int i = 0; i < campus->total_garages; i++) {
     for (int j = 0; j < campus->garages[i]->current_count; j++) {
       if (strcmp(license, campus->garages[i]->parked_vehicles[j]->license_plate) == 0) {
+        printf("Garage Found %s, for Vehicle %s when searching for %s\n", campus->garages[i]->garage_name, campus->garages[i]->parked_vehicles[j]->license_plate, license);
         foundvehicleingarage = removeVehicleFromGarage(campus->garages[i], temp->license_plate);
+      } else {
+        foundvehicleingarage = 1;
       }
     }
   }
-  if (foundvehicleingarage == 0) {
-    printf("%s NOT IN CAMPUS\n", license);
+  if (foundvehicleingarage == 1) {
+    printf("%s NOT IN CAMPUS.\n", license);
     return 0;
   } else {
     // searching for every garage for the target garage
     for (int i = 0; i < campus->total_garages; i++) {
       if (strcmp(campus->garages[i]->garage_name, target_garage_name) == 0) {
         if (campus->garages[i]->current_count == campus->garages[i]->total_capacity) {
-          printf("%s IS FULL\n", target_garage_name);
+          printf("%s IS FULL.\n", target_garage_name);
           return 0;
         }
         // parking the vehicle proper
         parkVehicle(campus->garages[i], temp);
-        printf("RELOCATION SUCCESSFUL\n");
+        printf("RELOCATION SUCCESSFUL.\n");
         return 1;
       }
     }
-    printf("%s NOT FOUND\n", target_garage_name);
     return 0;
   }
 }
