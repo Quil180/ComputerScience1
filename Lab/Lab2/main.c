@@ -31,8 +31,7 @@ student **readCourses(int *C, int *N, int *M) { // the structure points to an ar
   scanf("%d %d %d", C, N, M);
 
   // for loop for the amount of courses
-  student **courses = (student **)calloc(
-      *C, sizeof(student *)); // allocating the courses portion of the 2d array of students.
+  student **courses = (student **)calloc(*C, sizeof(student *)); // allocating the courses portion of the 2d array of students.
   for (i = 0; i < *C; i++) {
     courses[i] = (student *)calloc(*N, sizeof(student)); // allocating the student amount per course in the 2d array of students for loop for the amount of students
     for (j = 0; j < *N; j++) {
