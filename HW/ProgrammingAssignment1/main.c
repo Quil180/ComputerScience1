@@ -34,42 +34,46 @@ int findVehicleInGarage(Campus *campus, const char *license) {
   // going through every garage to find if a vehicle is in said garage.
   for (i = 0; i < campus->total_garages; i++) {
     for (j = 0; j < campus->garages[i]->current_count; j++) {
-      // comparing the current vehicle's license plate with the given license plate
-      if (strcmp(license, campus->garages[i]->parked_vehicles[j]->license_plate) == 0) {
-        // since the strcmp was exactly equal we found the location of the vehicle in the current garage
+      // comparing the current vehicle's license plate with the given license
+      // plate
+      if (strcmp(license,
+                 campus->garages[i]->parked_vehicles[j]->license_plate) == 0) {
+        // since the strcmp was exactly equal we found the location of the
+        // vehicle in the current garage
         return i;
       }
     }
   }
   // if the vehicle is not found, then it returns -1
-  return -1; 
+  return -1;
 } // returns the garage that the vehicle is found in
-
 
 // Functions I must implement
 Garage *createGarage(const char *name, int capacity) {
   // creates a new garage and initializes it
 
   // creating the garage via DMA
-  Garage *garage = (Garage *)calloc(1, sizeof(Garage)); 
+  Garage *garage = (Garage *)calloc(1, sizeof(Garage));
   // creating the name of the string via DMA
-  garage->garage_name = (char *)calloc(strlen(name) + 1, sizeof(char)); 
+  garage->garage_name = (char *)calloc(strlen(name) + 1, sizeof(char));
   // putting the name of the garage into the structure
   strcpy(garage->garage_name, name);
   // giving it the total capacity
   garage->total_capacity = capacity;
   // creating the array of parked vehicles with size of the max capacity
-  garage->parked_vehicles = (RegisteredVehicle **)calloc(capacity, sizeof(RegisteredVehicle)); 
+  garage->parked_vehicles =
+      (RegisteredVehicle **)calloc(capacity, sizeof(RegisteredVehicle));
   // initializing the current capacity of the garage to be 0
-  garage->current_count = 0; 
+  garage->current_count = 0;
 
   return garage;
 };
 
-
-RegisteredVehicle *createRegisteredVehicle(const char *license, const char *owner) {
+RegisteredVehicle *createRegisteredVehicle(const char *license,
+                                           const char *owner) {
   // create a new vehicle registry
-  RegisteredVehicle *vehicle = (RegisteredVehicle *)calloc(1, sizeof(RegisteredVehicle));
+  RegisteredVehicle *vehicle =
+      (RegisteredVehicle *)calloc(1, sizeof(RegisteredVehicle));
 
   // allocating the memory for both the name and license plate
   vehicle->owner_name = (char *)calloc(strlen(owner) + 1, sizeof(char));
@@ -86,13 +90,16 @@ void registerVehicle(Campus *campus, const char *license, const char *owner) {
   // register a new vehicle on campus
   campus->total_registered_vehicles += 1;
   // allocates the memory for the vehicle
-  campus->registered_vehicles = (RegisteredVehicle **)realloc(campus->registered_vehicles, campus->total_registered_vehicles * sizeof(RegisteredVehicle));
-  campus->registered_vehicles[campus->total_registered_vehicles - 1] = createRegisteredVehicle(license, owner);
+  campus->registered_vehicles = (RegisteredVehicle **)realloc(
+      campus->registered_vehicles,
+      campus->total_registered_vehicles * sizeof(RegisteredVehicle));
+  campus->registered_vehicles[campus->total_registered_vehicles - 1] =
+      createRegisteredVehicle(license, owner);
 }
 
 void parkVehicle(Garage *garage, RegisteredVehicle *vehicle) {
-  // park a vehicle at a garage. If full, print FULL, other park and print PARKED
-  // checking if the garage is full
+  // park a vehicle at a garage. If full, print FULL, other park and print
+  // PARKED checking if the garage is full
   if (garage->current_count == garage->total_capacity) {
     // the garage was found to be full
     printf("FULL\n");
@@ -114,7 +121,8 @@ int removeVehicleFromGarage(Garage *garage, const char *license) {
       break;
     }
   }
-  // if the i value is, for some reason, equal to the current count, end the functions
+  // if the i value is, for some reason, equal to the current count, end the
+  // functions
   if (i >= garage->current_count) {
     return 0;
   }
@@ -134,7 +142,8 @@ int removeVehicleFromGarage(Garage *garage, const char *license) {
   return 1;
 }
 
-RegisteredVehicle *searchVehicleByLicense(const Campus *campus, const char *license) {
+RegisteredVehicle *searchVehicleByLicense(const Campus *campus,
+                                          const char *license) {
   // search for vehicle by license. If found return vehicle, else return NULL
   int i = 0;
   // searching for the vehicle with the same license plate
@@ -169,14 +178,16 @@ int resizeGarage(Garage *garage, int new_capacity) {
   } else {
     // assuming the garage can be resized without kicking out any cars
     // reallocate the memory associated with the garage
-    garage->parked_vehicles = (RegisteredVehicle **)realloc(garage->parked_vehicles, new_capacity * sizeof(RegisteredVehicle));
+    garage->parked_vehicles = (RegisteredVehicle **)realloc(
+        garage->parked_vehicles, new_capacity * sizeof(RegisteredVehicle));
     garage->total_capacity = new_capacity;
     printf("SUCCESS\n");
     return 1;
   }
 }
 
-int relocateVehicle(Campus *campus, const char *license, const char *target_garage_name) {
+int relocateVehicle(Campus *campus, const char *license,
+                    const char *target_garage_name) {
   // relocate vehicle to another garage. If
   // garage not found, print [G] NOT FOUND.
   // If garage full, print [G] IS FULL.
@@ -193,7 +204,8 @@ int relocateVehicle(Campus *campus, const char *license, const char *target_gara
   // check if the car is on campus to begin with
   for (int i = 0; i < campus->total_garages; i++) {
     for (int j = 0; j < campus->garages[i]->current_count; j++) {
-      if (strcmp(license, campus->garages[i]->parked_vehicles[j]->license_plate) == 0) {
+      if (strcmp(license,
+                 campus->garages[i]->parked_vehicles[j]->license_plate) == 0) {
         // the car was found on campus!!
         carfound = j;
       }
@@ -215,7 +227,8 @@ int relocateVehicle(Campus *campus, const char *license, const char *target_gara
     // find the current garage the car is parked in
     int cargarageisin = findVehicleInGarage(campus, license);
     // check if the target garage is full
-    if (campus->garages[garagefound]->current_count == campus->garages[garagefound]->total_capacity) {
+    if (campus->garages[garagefound]->current_count ==
+        campus->garages[garagefound]->total_capacity) {
       printf("%s IS FULL.\n", target_garage_name);
       return 0;
     } else {
@@ -240,9 +253,13 @@ void displayVehiclesByOwner(const Campus *campus, const char *owner_name) {
     if (strcmp(owner_name, campus->registered_vehicles[i]->owner_name) == 0) {
       // check if the car is in a garage
       for (int garagei = 0; garagei < campus->total_garages; garagei++) {
-        for (int garagej = 0; garagej < campus->garages[garagei]->current_count; garagej++) {
+        for (int garagej = 0; garagej < campus->garages[garagei]->current_count;
+             garagej++) {
           // comparing the licencse plate with the vehicles in the garage
-          if (strcmp(campus->registered_vehicles[i]->license_plate, campus->garages[garagei]->parked_vehicles[garagej]->license_plate) == 0) {
+          if (strcmp(campus->registered_vehicles[i]->license_plate,
+                     campus->garages[garagei]
+                         ->parked_vehicles[garagej]
+                         ->license_plate) == 0) {
             // the car was found in the garage
             numvehicles += 1;
             vehicle_found = 1;
@@ -259,7 +276,9 @@ void displayVehiclesByOwner(const Campus *campus, const char *owner_name) {
         printf("%s NOT ON CAMPUS\n",
                campus->registered_vehicles[i]->license_plate);
       } else {
-        printf("%s %s\n", campus->garages[gi]->parked_vehicles[gj]->license_plate, campus->garages[gi]->garage_name);
+        printf("%s %s\n",
+               campus->garages[gi]->parked_vehicles[gj]->license_plate,
+               campus->garages[gi]->garage_name);
       }
     }
   }
@@ -294,7 +313,7 @@ int removeGarage(Campus *campus, const char *garage_name) {
   return 0;
 }
 
-void generateGarageUtilizationReport(const Campus *campus) { 
+void generateGarageUtilizationReport(const Campus *campus) {
   // generate a report on all garage. print the following:
   // Garage: [G], Capacity: [GC], Occupied: [GO], Utilization: [GU]%
   // After this print the name of the garage which is utilized the least.
@@ -302,12 +321,18 @@ void generateGarageUtilizationReport(const Campus *campus) {
   int j = 0;
   for (int i = 0; i < campus->total_garages; i++) {
     // for every garage print the following:
-    printf("Garage: %s, Capacity: %d, Occupied: %d, Utilization: %0.2f%%\n", campus->garages[i]->garage_name, campus->garages[i]->total_capacity, campus->garages[i]->current_count, 100.00 * (campus->garages[i]->current_count) / (campus->garages[i]->total_capacity));
-    if (utilizedi > 1.0 * (campus->garages[i]->current_count) / (campus->garages[i]->total_capacity)) {
+    printf("Garage: %s, Capacity: %d, Occupied: %d, Utilization: %0.2f%%\n",
+           campus->garages[i]->garage_name, campus->garages[i]->total_capacity,
+           campus->garages[i]->current_count,
+           100.00 * (campus->garages[i]->current_count) /
+               (campus->garages[i]->total_capacity));
+    if (utilizedi > 1.0 * (campus->garages[i]->current_count) /
+                        (campus->garages[i]->total_capacity)) {
       // log the least utilized garage
       j = i;
       // update the minimum utilization
-      utilizedi = 1.0 * (campus->garages[i]->current_count) / (campus->garages[i]->total_capacity);
+      utilizedi = 1.0 * (campus->garages[i]->current_count) /
+                  (campus->garages[i]->total_capacity);
     }
   }
   printf("Least Utilized: %s\n", campus->garages[j]->garage_name);
@@ -325,7 +350,9 @@ createCampus(int *c) { // the function that takes in all of the initial data
   scanf("%d", &(campus->total_garages));
   scanf("%d", &(campus->total_registered_vehicles));
   scanf("%d", c);
-  campus->garages = (Garage **)calloc(campus->total_garages, sizeof(Garage)); // allocating the memory for number of garages, g.
+  campus->garages = (Garage **)calloc(
+      campus->total_garages,
+      sizeof(Garage)); // allocating the memory for number of garages, g.
   for (i = 0; i < campus->total_garages; i++) {
     // for every garage find its size and name
     scanf("%s %d", name, &size);
@@ -333,7 +360,9 @@ createCampus(int *c) { // the function that takes in all of the initial data
     campus->garages[i] = createGarage(name, size);
   }
 
-  campus->registered_vehicles = (RegisteredVehicle **)calloc(campus->total_registered_vehicles, sizeof(RegisteredVehicle)); // making the array of vehicles
+  campus->registered_vehicles = (RegisteredVehicle **)calloc(
+      campus->total_registered_vehicles,
+      sizeof(RegisteredVehicle)); // making the array of vehicles
   // creating the registry of vehicles
   for (i = 0; i < campus->total_registered_vehicles; i++) {
     // for every vehicle find its license plate and owner
@@ -362,14 +391,13 @@ void freeAll(Campus *campus) {
   for (i = 0; i < campus->total_garages; i++) {
     free(campus->garages[i]->parked_vehicles);
     free(campus->garages[i]->garage_name);
-    free(campus->garages[i]); 
+    free(campus->garages[i]);
   }
   // freeing the whole garages array
   free(campus->garages);
   // freeing the campus from memory
   free(campus);
 }
-
 
 // other notes:
 // vehicles should only be allocated once.
@@ -394,7 +422,8 @@ int main() {
     if (strcmp(command, "PARK") == 0) {
       scanf("%s %s", arg1, arg2);
       // finding the car's spot in the registered vehicle array
-      while (strcmp(arg1, campus->registered_vehicles[arg1i]->license_plate) != 0) {
+      while (strcmp(arg1, campus->registered_vehicles[arg1i]->license_plate) !=
+             0) {
         arg1i++;
         if (arg1i > campus->total_registered_vehicles) {
           break;
@@ -448,7 +477,8 @@ int main() {
         int worked =
             removeVehicleFromGarage(campus->garages[foundgarage], arg1);
         if (worked) {
-          printf("REMOVED FROM %s\n", campus->garages[foundgarage]->garage_name);
+          printf("REMOVED FROM %s\n",
+                 campus->garages[foundgarage]->garage_name);
         }
       }
     } else if (strcmp(command, "REMOVE_GARAGE") == 0) {
