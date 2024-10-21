@@ -1,12 +1,5 @@
 #include <stdio.h>
-
-int fibonacci(int n) {
-  if (n <= 1) {
-    return n;
-  } else {
-    return (fibonacci(n - 1) + fibonacci(n - 2));
-  }
-}
+#include <pthread.h> // for multithreading
 
 int f(int n) {
   int ans, i;
@@ -20,9 +13,15 @@ int f(int n) {
   return ans;
 }
 
+// permutation functions below
+// using a helper method
+void permutation(int *givenarray) {
+  
+}
+
 int main() {
   // recursion
   // example of recursion is a fibonaci number (where the next number is the
   // last 2 numbers added together)
-    printf("%d ", f(35));
+    printf("%d ", f(20));
 }
