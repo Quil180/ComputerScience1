@@ -1,0 +1,106 @@
+\documentclass[12pt, letterpaper, border=0.5cm]{article}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{titling}
+\usepackage{forest}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\setlength{\droptitle}{-50mm}
+\title{Heaps Exercises}
+\author{Yousef Alaa Awad}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{}
+In an array-based implementation of a Heap, the left-child of the left-child of the node at index i, if it exists, can be found at what array location?
+\\\\ I will assume we start at the node, therefore it will be the following:
+$$2*(2i+1)+1\rightarrow4i+2+1\rightarrow4i+3$$
+
+\section{}
+In an array-based implementation of a Heap, the right-child of the right-child of the node at index i, if it exists, can be found at what array location?
+\\\\ I will assume we start at the node, therefore it will be the following:
+$$2*(2i+2)+2\rightarrow4i+4+2\rightarrow4i+6$$
+
+\section{}
+Show the result of inserting the item 7 into the heap shown below:\\
+\centerline{
+  \begin{forest}
+    [1 [3 [12 [15][18]][6 [10][12]]] [7 [9 [14][77]][8 [35]]]]
+  \end{forest}
+}
+
+\section{}
+Show the result of removing the minimum element from the original heap in question \#2 (without 7) from above.
+
+\centerline{
+  \begin{forest}
+    [3[6[12[15][18]][10[77][12]]][8[9[14]][35]]]
+  \end{forest}
+}
+
+\section{}
+Show the array representation of the original heap from question \#2.
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| } 
+ \hline
+ 1 & 3 & 8 & 12 & 6 & 9 & 35 & 15 & 18 & 10 & 12 & 14 & 77 \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{}
+Run the whole Heapify function on the following random values: (this is the function that builds a heap in O(n) time) \\\\ 
+\centerline{I will assume we want to turn it into a min heap...}
+\centerline{
+  \begin{forest}
+    [1 [2 [8 [12][11]] [7 [77][46]]] [20 [45][67]]]
+  \end{forest}
+}
+\\
+\section{}
+Explain each step shown in the code below, for the percolateDown function:
+\begin{lstlisting}[style=CStyle]
+void percolateDown(struct heapStruct *h, int index) {
+  int min; // minimum index we found.
+  if ((2*index+1) <= h->size) { // if the index given has 2 children, do the following
+      min = minimum(h->heaparray[2*index], 2*index, h->heaparray[2*index+1], 2*index+1); // calling a function to find the minimum child's index.
+    if (h->heaparray[index] > h->heaparray[min]) { // minimum child found above is smaller than the current one we are on.
+      swap(h, index, min); // if it is bigger, swap them.
+      percolateDown(h, min); // call again with the minimum index, to make sure it does not need to be percolated down.
+    }
+  } else if (h->size == 2*index) { // if the index given only has 1 child.
+   if (h->heaparray[index] > h->heaparray[2*index]) // check if the current one is larger than its child
+    swap(h, index, 2*index); // and if so, swap them.
+   }
+  }
+\end{lstlisting}
+
+
+\end{document}

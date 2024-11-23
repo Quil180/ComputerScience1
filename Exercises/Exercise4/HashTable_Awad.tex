@@ -1,0 +1,84 @@
+\documentclass[12pt, letterpaper]{article}
+
+\newcommand{\mycomment}[1]{}
+
+\usepackage{listings}
+\usepackage{titling}
+\usepackage{xcolor}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\setlength{\droptitle}{-50mm}
+\title{Hash Table Exercises}
+\author{Yousef Alaa Awad}
+\date{}
+
+\begin{document}
+\mycomment{
+\maketitle
+\section{}
+Consider a hash table that uses the linear probing technique with the following hash function f(x) = (5x+4)\%11. (The hash table is of size 11.) If we insert the values 3, 9, 2, 1, 14, 6 and 25 into the table, in that order, show where these values would end up in the table?
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
+ \hline
+ index & 0  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ 
+ value & 25 & 6 &   & 2 &   & 9 &   &   & 3 & 1 & 14 \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{}
+Do the same question as above, but this time use the quadratic probing strategy.
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
+ \hline
+ index & 0 & 1  & 2 & 3 & 4 & 5 & 6  & 7 & 8 & 9 & 10 \\ 
+ value &   & 14 & 6 & 2 &   & 9 & 25 &   & 3 & 1 &    \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{}
+Do the question above, but draw a picture of what the hash table would look like if seperate chaining hashing was used.
+
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c| } 
+ \hline
+ index & 0 & 1 & 2 & 3 & 4 & 5 & 6  & 7 & 8                               & 9 & 10 \\ 
+ value &   & 6 &   & 2 &   & 9 &    &   & 3$\rightarrow$14$\rightarrow$25 & 1 & \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{}
+Edit the code in htablelinear.c so that quadratic probing is the searching strategy used. You will need to modify insert function, then search and then delete. Add the code to your pdf when submitting.
+}
+\section*{4}
+\lstinputlisting[style=CStyle]{htablelinear.c}
+\end{document}
