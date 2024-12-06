@@ -1,3 +1,5 @@
+/* COP 3502C Assignment 6
+This program is written by: Yousef Alaa Awad */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
