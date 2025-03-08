@@ -163,6 +163,7 @@ void merge(struct garage a[], int left, int middle, int right) {
   free(lArr);
   free(rArr);
 }
+
 void mergeSort(struct garage a[], int left, int right, int threshold) {
   if (right - left < threshold) {
     insertionSort(a, right, left);

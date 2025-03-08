@@ -10,7 +10,8 @@ double distance(int x1, int y1, int x2, int y2) {
 }
 
 void print(int **locations, char **names, int n) {
-  // prints out the given garages and their names, only used for testing purposes.
+  // prints out the given garages and their names, only used for testing
+  // purposes.
   for (int i = 0; i < n; i++) {
     printf("%s -> (%d, %d) ", names[i], locations[i][0], locations[i][1]);
   }

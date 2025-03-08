@@ -77,21 +77,22 @@ void display(Queue *q) {
   Student *walkingStudent = q->front;
   // displays the queue given
   if (walkingStudent == NULL) {
-    // the list doesn't exist
-  } else {
-    // the queue/list exists
+    // the queue/list does not exist
+    return;
+  }
+  // the queue/list exists
+  printf("%d ", walkingStudent->sequenceNumber);
+  walkingStudent = walkingStudent->next;
+  while (walkingStudent != q->back) {
+    // print every student in the queue until you reach the back.
     printf("%d ", walkingStudent->sequenceNumber);
     walkingStudent = walkingStudent->next;
-    while (walkingStudent != q->back) {
-      // print every student in the queue until you reach the back.
-      printf("%d ", walkingStudent->sequenceNumber);
-      walkingStudent = walkingStudent->next;
-    }
-    // since we stopped the back, we will then print the number of the last
-    // student
-    printf("%d", walkingStudent->sequenceNumber);
-    walkingStudent = walkingStudent->next;
   }
+  // since we stopped the back, we will then print the number of the last
+  // student
+  printf("%d", walkingStudent->sequenceNumber);
+  walkingStudent = walkingStudent->next;
+
   printf("\n");
 }
 
@@ -266,10 +267,10 @@ int main() {
   printf("Initial status of nonempty queues\n");
   for (int i = 0; i < 10; i++) {
     if (isEmpty(&garages[i])) {
-    } else {
-      printf("%d ", garages[i].nodeCount);
-      display(&garages[i]);
+      break;
     }
+    printf("%d ", garages[i].nodeCount);
+    display(&garages[i]);
   }
 
   for (int i = 0; i < 10; i++) {
@@ -281,10 +282,10 @@ int main() {
   printf("\nAfter ordering status of nonempty queues\n");
   for (int i = 0; i < 10; i++) {
     if (isEmpty(&garages[i])) {
-    } else {
-      printf("%d ", garages[i].nodeCount);
-      display(&garages[i]);
+      break;
     }
+    printf("%d ", garages[i].nodeCount);
+    display(&garages[i]);
   }
 
   // beginning phase 1 (GL everyone!!!)
